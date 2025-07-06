@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extend hr.employee Form View -->
+        <record id="view_employee_form_inherit_promotion_demotion" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.promotion.demotion</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <!-- Add smart buttons above the form -->
+                              <xpath expr="//div[@name='button_box']" position="inside">
+                    <button type="object"
+                            name="action_view_promotions"
+                            string="Promotions"
+                            class="oe_stat_button"
+                            icon="fa-arrow-up"
+                            groups="saria_employee_promotion_demotion.group_submit_promotion_demotion">
+                        <field name="promotion_count" widget="statinfo" string="Promotions"/>
+                    </button>
+                    <button type="object"
+                            name="action_view_demotions"
+                            string="Demotions"
+                            class="oe_stat_button"
+                            icon="fa-arrow-down"
+                            groups="saria_employee_promotion_demotion.group_submit_promotion_demotion">
+                        <field name="demotion_count" widget="statinfo" string="Demotions"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

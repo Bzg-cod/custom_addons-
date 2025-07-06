@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="payroll_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 style="text-align: center">Payroll Report</h2>
+                    <h4 style="text-align: center">
+                        <t t-if="start_date and end_date">
+                            <t t-esc="start_date"/> - <t t-esc="end_date"/>
+                        </t>
+                        <t t-else="">
+                            <t t-esc="date_now"/>
+                        </t>
+                    </h4>
+
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Department</th>
+                                <th>Employee</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Salary Rule</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="lines" t-as="line">
+                                <tr>
+                                    <td><t t-esc="line['department']"/></td>
+                                    <td><t t-esc="line['employee']"/></td>
+                                    <td><t t-esc="line['start_date']" t-options='{"widget": "date"}'/></td>
+                                    <td><t t-esc="line['end_date']" t-options='{"widget": "date"}'/></td>
+                                    <td><t t-esc="line['salary_rule']"/></td>
+                                    <td><t t-esc="'{:,.2f}'.format(line['amount'] or 0.0)"/></td>
+                                </tr>
+                            </t>
+                            <t t-if="not lines">
+                                <tr>
+                                    <td colspan="6" style="text-align: center;">No Payroll Data</td>
+                                </tr>
+                            </t>
+                        </tbody>
+                        <t t-if="lines">
+                         <tfoot>
+                                <tr>
+                                    <td colspan="5" style="text-align: right; font-weight: bold;">Total</td>
+                                    <td style="font-weight: bold;"><t t-esc="'{:,.2f}'.format(sum(line['amount'] for line in lines))"/></td>
+                                </tr>
+                            </tfoot>
+                        </t>
+                    </table>
+  
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_payroll_report_pdf" model="ir.actions.report">
+        <field name="name">Payroll Report (PDF)</field>
+        <field name="model">payroll.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">payroll_dynamic_report.payroll_report_template</field>
+        <field name="report_file">payroll_dynamic_report.payroll_report_template</field>
+        <field name="binding_model_id" ref="model_payroll_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

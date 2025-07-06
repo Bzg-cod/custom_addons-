@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Employee Demotion Form View -->
+        <record id="view_employee_demotion_form" model="ir.ui.view">
+            <field name="name">employee.demotion.form</field>
+            <field name="model">employee.demotion</field>
+            <field name="arch" type="xml">
+                <form string="Employee Demotion">
+                    <header>
+                        <button name="action_submit" state="draft" string="Submit" type="object" class="oe_highlight" invisible="state != 'draft'" groups="saria_employee_promotion_demotion.group_submit_promotion_demotion"/>
+                        <button name="action_approve" state="submit,draft" string="Approve" type="object" invisible="state != 'submit'" class="oe_highlight" groups="saria_employee_promotion_demotion.group_approve_promotion_demotion"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="old_job" readonly="1"/>
+                                <field name="old_salary" readonly="1"/>
+                                <field name="old_transportation_allowance" readonly="1"/>
+                                <field name="old_position_allowance" readonly="1"/>
+                                <field name="old_fuel_allowance" readonly="1"/>
+                                <field name="old_food_allowance" readonly="1"/> <!-- Renamed from old_meal_allowance -->
+                                <field name="old_other_allowance" readonly="1"/>
+                                <field name="old_inflation_adjustment" readonly="1"/>
+                                <field name="old_communication_allowance" readonly="1"/>
+                                <field name="old_internet_allowance" readonly="1"/>
+                                <field name="old_unused_leave_payment" readonly="1"/>
+                                <field name="old_severance_pay_compensation" readonly="1"/> <!-- Fixed typo -->
+                                <field name="old_training_development" readonly="1"/>
+                                <field name="old_desert_allowance" readonly="1"/>
+                                <field name="old_representation_allowance" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="demotion_date" readonly="state == 'approve'"/>
+                                <field name="new_job_id" readonly="state == 'approve'"/>
+                                <field name="new_wage" readonly="state == 'approve'"/>
+                                <field name="new_transportation_allowance" readonly="state == 'approve'"/>
+                                <field name="new_position_allowance" readonly="state == 'approve'"/>
+                                <field name="new_fuel_allowance" readonly="state == 'approve'"/>
+                                <field name="new_food_allowance" readonly="state == 'approve'"/> <!-- Renamed from new_meal_allowance -->
+                                <field name="new_other_allowance" readonly="state == 'approve'"/>
+                                <field name="new_inflation_adjustment" readonly="state == 'approve'"/>
+                                <field name="new_communication_allowance" readonly="state == 'approve'"/>
+                                <field name="new_internet_allowance" readonly="state == 'approve'"/>
+                                <field name="new_unused_leave_payment" readonly="state == 'approve'"/>
+                                <field name="new_severance_pay_compensation" readonly="state == 'approve'"/> <!-- Fixed typo -->
+                                <field name="new_training_development" readonly="state == 'approve'"/>
+                                <field name="new_desert_allowance" readonly="state == 'approve'"/>
+                                <field name="new_representation_allowance" readonly="state == 'approve'"/>
+                                <field name="reason" readonly="state == 'approve'"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Employee Demotion Tree View -->
+        <record id="view_employee_demotion_tree" model="ir.ui.view">
+            <field name="name">employee.demotion.tree</field>
+            <field name="model">employee.demotion</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Demotion">
+                    <field name="employee_id"/>
+                    <field name="demotion_date"/>
+                    <field name="new_job_id"/> <!-- Changed from new_job -->
+                    <field name="old_salary"/>
+                    <field name="new_wage"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for Employee Demotion -->
+        <record id="action_employee_demotion" model="ir.actions.act_window">
+            <field name="name">Employee Demotion</field>
+            <field name="res_model">employee.demotion</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_employee_demotion_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new employee demotion.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu item for Employee Demotion under HR Root Menu -->
+        <menuitem id="menu_employee_demotion"
+                  name="Employee Demotion"
+                  parent="menu_employee_promotion_root"
+                  action="action_employee_demotion"
+                  sequence="10"/>
+    </data>
+</odoo>

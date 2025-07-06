@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Submit Promotions and Demotions Group -->
+        <record id="group_submit_promotion_demotion" model="res.groups">
+            <field name="name">Submit Promotions and Demotions</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+
+        <!-- Approve Promotions and Demotions Group -->
+        <record id="group_approve_promotion_demotion" model="res.groups">
+            <field name="name">Approve Promotions and Demotions</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+    </data>
+</odoo>
